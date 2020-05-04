@@ -7,24 +7,24 @@ var firebaseConfig = {
     messagingSenderId: "457756652899",
     appId: "1:457756652899:web:cc83b66869081907748f56",
     measurementId: "G-N92FT2C0FD"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.auth.Auth.Persistence.LOCAL;
+};
+firebase.initializeApp(firebaseConfig);
 
-    $('#btn-login').click(function(){
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      window.location.href="admin.html";
+    } 
+    else {
         
-        var email=$("#email").val();
-        var password=$("#password").val();
+    }
+  });
 
-        var result=firebase.auth().signInWithEmailAndPassword(email,password);
-
-        result.catch(function(error){
-            var errorCode=error.code;
-            var errorMessage=error.message;
-
-            console.log(errorCode);
-            console.log(errorMessage);
-        });
-
-    });
+function login(){
+    var email=document.getElementById('email').value;
+    var password=document.getElementById('password').value;
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        window.alert("Error : "+errorMessage);
+      });
+}
